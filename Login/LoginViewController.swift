@@ -18,10 +18,54 @@ class LoginViewController: UIViewController {
     }
 
     // TODO: instantiate the views needed for your project
+    let loginLabel = UILabel(frame: CGRect(x: 130, y: 50,  width: UIScreen.main.bounds.width - 40,  height: 200))
+    let loginText = UITextField(frame: CGRect(x: 10, y: 50,  width: 250,  height: 20) )
+    let passwordText = UITextField(frame: CGRect(x: 10, y: 100,  width: 150,  height: 20))
+    
+    
+    var button : UIButton = {
+        let loginButton = UIButton()
+        
+        loginButton.setTitle("Login", for: .normal)
+        loginButton.backgroundColor = Constants.backgroundColor
+        loginButton.layer.cornerRadius = 10
+        loginButton.layer.masksToBounds = true
+        
+        return loginButton
+    }()
+    
+    var login : UIView = {
+        let uiLoginView = UIView()
+        
+        uiLoginView.backgroundColor = .white
+        uiLoginView.layer.cornerRadius = 10
+        uiLoginView.layer.masksToBounds = true
+        
+        return uiLoginView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Constants.backgroundColor
+        view.addSubview(loginLabel)
+        view.addSubview(login)
+        login.addSubview(loginText)
+        login.addSubview(passwordText)
+        login.addSubview(button)
+        
+        loginLabel.text = "Login View Controller"
+        loginLabel.textColor = .white
+        
+        login.frame = CGRect(x: 0, y: 0,  width: UIScreen.main.bounds.width - 16,  height: 200)
+        login.center = view.center
+
+        loginText.text = "berkeley.edu account"
+        passwordText.text = "Password"
+        
+        
+        button.frame = CGRect(x: 150, y: 150, width: 100, height: 20)
+        button.centerXAnchor.constraint(equalTo: login.centerXAnchor)
+        button.addTarget(self, action: #selector(validate), for: .touchDown)
         
         // TODO: Add your views either as subviews of `view` or subviews of each other using `addSubview`
         
@@ -29,8 +73,11 @@ class LoginViewController: UIViewController {
     }
     
     // TODO: create an IBAction for your login button
-    
-    
+    @IBAction func validate(sender: UIButton) {
+        let log = loginText.text
+        let pas = passwordText.text
+        authenticateUser(username: log, password: pas)
+    }
     
     
     
